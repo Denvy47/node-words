@@ -3,14 +3,21 @@ const app = express();
 const pgp = require('pg-promise')();
 const connect = {
     host: 'localhost',
-    port: 5432,
+    port: 5433,
     database: 'postgres',
     user: 'postgres',
-    password: 'postgres'
+    password: '12'
   };
 const db = pgp(connect);
 
 app.use(express.static('public'));
+
+app.get('/getData', function(req,res) {
+    db.any('SELECT * FROM words')
+        .then(function(result){
+            res.send(result);
+        })
+})
 
 app.get('/add-new-word', function(req, res) {    
     res.send('Слово добавлено'); 
@@ -28,11 +35,6 @@ app.get('/removeWord', function(req, res) {
         eng: req.query.engWord
     })
 })
-
-db.any('select * from words')
-    .then(function (data) {
-        console.log('DATA:', data)
-    })
 
 app.listen(3000, function () {
   console.log('Running on http://localhost:3000');
