@@ -1,0 +1,108 @@
+body {
+	font-family: 'Montserrat', sans-serif;
+	color: #eee;
+}
+
+.container {
+	max-width: 576px;
+	margin: 0 auto;
+	background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+	border-radius: 5px;
+}
+
+.header {
+	padding: 10px 20px;
+	text-align: center;
+}
+
+.header__title {
+	font-size: 18px;
+	text-shadow: 2px 3px 0 #898999;
+	font-weight: 900;
+}
+
+.main {
+	padding: 15px 20px;
+}
+
+.rus-to-eng, .eng-to-rus {
+	display: flex;
+	justify-content: space-between;
+	background-color: rgba(189,189,189,0.2);
+	font-family: 'Space Mono', monospace;
+	border-left: 3px solid #fff;
+	border-radius: 5px;
+	padding: 15px 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ru-words-translate, .eng-words-translate {
+	text-align: right;
+}
+
+.word {
+	text-transform: capitalize;
+	margin-bottom: 5px;
+}
+
+.wordt {
+	visibility: hidden;
+}
+
+.buttons {
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn {
+	display: block;
+	border: 0;
+	border-radius: 50px;
+	width: 110px;
+	height: 30px;
+	cursor: pointer;
+	box-shadow: 10px 10px 14px 1px rgba(00,00,00,0.2);
+	transition: all .2s;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	outline: none;
+}
+
+.btn:hover {
+	box-shadow: none;
+}
+
+.btn:active {
+	transform: translateY(1px);
+}
+
+.btn__aqua {
+	background-color: #00c9b7;
+	color: #fff;
+}
+
+.btn__dark {
+	background-color: #051937;
+	color: #ddd;
+}
+
+#reset-btn:hover::before {
+	animation: infiniteRotate 1.5s linear infinite;
+}
+
+#reset-btn::before {
+	content: "";
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	background: url("../img/refresh-button.svg") no-repeat;
+	vertical-align: middle;
+	margin-right: 5px;
+	animation-play-state: paused;
+}
+
+@keyframes infiniteRotate {
+	from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
