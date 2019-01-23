@@ -9,18 +9,11 @@ const remBtn = document.getElementById('rem-wrd-btn');
 
 console.log('Общее количество слов: ' + engWords.length);
 showBtn.addEventListener('click', showAnswers);
-resetBtn.addEventListener('click', reload);
+resetBtn.addEventListener('click', reset);
 addBtn.addEventListener('click', addWordToDB);
 remBtn.addEventListener('click', removeWordFromDB);
 
-insertRandomEngWord('word1', 'word1t');
-insertRandomEngWord('word2', 'word2t');
-insertRandomEngWord('word3', 'word3t');
-insertRandomEngWord('word4', 'word4t');
-insertRandomRuWord('word5', 'word5t');
-insertRandomRuWord('word6', 'word6t');
-insertRandomRuWord('word7', 'word7t');
-insertRandomRuWord('word8', 'word8t');
+getData();
 
 function insertRandomEngWord(word, wordTr) {
 	let index = Math.floor(Math.random() * engWords.length);
@@ -50,8 +43,23 @@ function showAnswers() {
 	}
 }
 
-function reload() {
-	document.location.reload();
+function getData() {
+	const xhr = new XMLHttpRequest();
+	xhr.open('GET', 'http://localhost:3000/getData');
+	xhr.send();
+
+	xhr.onload = function() {
+		const jsonResponse = JSON.parse(xhr.responseText);
+		console.log(jsonResponse);
+
+		for (let i = 0; i < jsonResponse.length; i ++) {
+			engWords.push(jsonResponse[i].eng_words);
+			ruWords.push(jsonResponse[i].rus_words);
+		}
+	
+		console.log(engWords);
+		console.log(ruWords);
+	};
 }
 
 function addWordToDB() {
@@ -79,4 +87,17 @@ function removeWordFromDB() {
 	} else {
 		alert(xhr.responseText);
 	}
+}
+
+function reset() {
+	resetBtn.innerHTML = 'Reset';
+
+	insertRandomEngWord('word1', 'word1t');
+	insertRandomEngWord('word2', 'word2t');
+	insertRandomEngWord('word3', 'word3t');
+	insertRandomEngWord('word4', 'word4t');
+	insertRandomRuWord('word5', 'word5t');
+	insertRandomRuWord('word6', 'word6t');
+	insertRandomRuWord('word7', 'word7t');
+	insertRandomRuWord('word8', 'word8t');
 }

@@ -15,7 +15,7 @@ app.use(express.static('public'));
 app.get('/getData', function(req,res) {
     db.any('SELECT * FROM words')
         .then(function(result){
-            res.send(result);
+            res.json(result);
         })
 })
 
