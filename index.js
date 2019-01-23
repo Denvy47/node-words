@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 const pgp = require('pg-promise')();
 const connect = {
-    host: 'localhost',
-    port: 5433,
-    database: 'postgres',
-    user: 'postgres',
-    password: '12'
+    host: 'packy.db.elephantsql.com',
+    port: 5432,
+    database: 'iekeqaju',
+    user: 'iekeqaju',
+    password: 'c3xxRc5LjmG9cWkY9lu2TdYdfZA_N7uo'
   };
 const db = pgp(connect);
 
