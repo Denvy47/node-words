@@ -36,6 +36,4 @@ app.get('/removeWord', function(req, res) {
     })
 })
 
-app.listen(3000, function () {
-  console.log('Running on http://localhost:3000');
-});
+app.listen(process.env.PORT || 8080, () => console.log("All is ok"));
