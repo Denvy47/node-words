@@ -104,5 +104,32 @@ body {
 
 @keyframes infiniteRotate {
 	from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
+	to {transform:rotate(360deg);}
+}
+
+.footer {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	display: flex;
+	justify-content: center;
+	background-color: #051937;
+}
+
+.footer__link {
+	color: #ddd;
+	font-size: 14px;
+}
+
+.footer__link:hover {
+	text-decoration: none;
+}
+
+.footer__link::before {
+	content: "";
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	background: url("../img/github-brands.svg") no-repeat;
+	vertical-align: middle;
+	margin-right: 5px;
 }
