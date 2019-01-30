@@ -2,11 +2,16 @@ const express = require('express');
 const app = express();
 const pgp = require('pg-promise')();
 const connect = {
-    host: 'packy.db.elephantsql.com',
-    port: 5432,
-    database: 'iekeqaju',
-    user: 'iekeqaju',
-    password: 'c3xxRc5LjmG9cWkY9lu2TdYdfZA_N7uo'
+    // host: 'packy.db.elephantsql.com',
+    // port: 5432,
+    // database: 'iekeqaju',
+    // user: 'iekeqaju',
+    // password: 'c3xxRc5LjmG9cWkY9lu2TdYdfZA_N7uo'
+    host: 'localhost',
+    port: 5433,
+    database: 'postgres',
+    user: 'postgres',
+    password: '12'
   };
 const db = pgp(connect);
 
@@ -20,20 +25,20 @@ app.get('/getData', function(req,res) {
 })
 
 app.get('/add-new-word', function(req, res) {    
-    res.send('Слово добавлено'); 
-    
     db.none('INSERT INTO words(eng_words, rus_words) VALUES(${eng}, ${rus})', {
         eng: req.query.engWord,
         rus: req.query.ruWord   
     })
+
+    res.send('Word added')
 });
 
 app.get('/removeWord', function(req, res) {
-    res.send('Слово удалено');
-
     db.none('DELETE FROM words WHERE eng_words = ${eng}', {
         eng: req.query.engWord
     })
+
+    res.send('Word deleted')
 })
 
 app.listen(process.env.PORT || 8080, () => console.log("All is ok"));
