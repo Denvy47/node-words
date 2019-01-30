@@ -8,5 +8,12 @@
         "node/prefer-global/url-search-params": ["error", "always"],
         "node/prefer-global/url": ["error", "always"],
         "no-console": 0
+    },
+    "globals": {
+        "document": true,
+        "window": true,
+        "prompt": true,
+        "alert": true,
+        "XMLHttpRequest": true
     }
 }

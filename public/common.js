@@ -45,7 +45,7 @@ function showAnswers() {
 
 function getData() {
 	const xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://localhost:3000/getData');
+	xhr.open('GET', 'https://node-words.herokuapp.com/getData');
 	xhr.send();
 
 	xhr.onload = function() {
@@ -67,7 +67,7 @@ function addWordToDB() {
 	const newRuWord = prompt('Введите перевод добавляемого слова (рус.): ');	
 
 	const xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://localhost:3000/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord, false);
+	xhr.open('GET', 'https://node-words.herokuapp.com/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord, false);
 	xhr.send();
 	if (xhr.status != 200) {
 		alert(xhr.status + ': ' + xhr.statusText);
@@ -80,7 +80,7 @@ function removeWordFromDB() {
 	const remWord = prompt('Введите слово для удаления (англ.): ');
 
 	const xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://localhost:3000/removeWord?engWord=' + remWord, false);
+	xhr.open('GET', 'https://node-words.herokuapp.com/removeWord?engWord=' + remWord, false);
 	xhr.send();
 	if (xhr.status != 200) {
 		alert(xhr.status + ': ' + xhr.statusText);

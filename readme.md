@@ -12,14 +12,25 @@
  - Чтобы обновить список слов нажмите "Reset".
  
 ## Что было использовано при создании:
-### Серверная часть:
+
+#### Серверная часть:
  - Node js
  - Express js
 
-### База данных:
- - PoestgreSQL
+#### База данных:
+ - PoestgreSQL (<https://www.elephantsql.com/>)
 
-### Клиентская часть:
+#### Клиентская часть:
  - HTML
  - CSS
  - JS
+
+#### Хостинг:
+ - Heroku (<https://node-words.herokuapp.com/>)
+
+ ## Чтобы развернуть приложение локально (git clone):
+ - Установить node js
+ - Открыть cmd
+ - Ввести npm install
+ - Ввести npm start
+ - Открыть в браузере localhost:8080
