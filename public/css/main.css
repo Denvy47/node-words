@@ -4,10 +4,14 @@ body {
 }
 
 .container {
+	padding-top: 1px;
 	max-width: 576px;
 	margin: 0 auto;
 	background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-	border-radius: 5px;
+}
+
+.hide {
+	display: none;
 }
 
 .header {
@@ -67,6 +71,11 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	outline: none;
+}
+
+.btn__start {
+	margin: 15px auto;
+	width: 200px;
 }
 
 .btn:hover {
