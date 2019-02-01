@@ -2,17 +2,16 @@
 
 let engWords = [];
 let ruWords = [];
-const words = document.querySelectorAll('.word');
-const wordt = document.querySelectorAll('.wordt');
+
 const showBtn = document.getElementById('show-tr-btn');
 const resetBtn = document.getElementById('reset-btn');
 const addBtn = document.getElementById('add-wrd-btn');
 const remBtn = document.getElementById('rem-wrd-btn');
-const startBtn = document.querySelector('.btn__start');
-let WordsInSection = +prompt('Number of words you will see in one section: ');
+const startBtn = document.getElementById('btn__start');
+let wordsInSection = +prompt('Number of words you will see in one section: ');
 
 showBtn.addEventListener('click', showAnswers);
-resetBtn.addEventListener('click', reset);
+resetBtn.addEventListener('click', replaceWords);
 addBtn.addEventListener('click', addWordToDB);
 remBtn.addEventListener('click', removeWordFromDB);
 startBtn.addEventListener('click', start);
@@ -39,7 +38,7 @@ function insertRandomEngWords() {
 	const parentWords = document.querySelector('.eng-words');
 	const parentTranslate = document.querySelector('.eng-words-translate');
 
-	for (let i = 0; i < WordsInSection; i++) {
+	for (let i = 0; i < wordsInSection; i++) {
 		index = Math.floor(Math.random() * (engWords.length - 1));
 		
 		word = document.createElement('p');
@@ -61,7 +60,7 @@ function insertRandomRuWords() {
 	const parentWords = document.querySelector('.ru-words');
 	const parentTranslate = document.querySelector('.ru-words-translate');
 
-	for (let i = 0; i < WordsInSection; i++) {
+	for (let i = 0; i < wordsInSection; i++) {
 		index = Math.floor(Math.random() * (engWords.length - 1));
 		
 		word = document.createElement('p');
@@ -77,10 +76,28 @@ function insertRandomRuWords() {
 }
 
 function replaceWords() {
-	
+	let index;
+	const words = document.querySelectorAll('.word');
+	const wordt = document.querySelectorAll('.wordt');
+
+	for (let i = 0; i < wordsInSection; i++) {
+		index = Math.floor(Math.random() * (engWords.length - 1));
+		words[i].innerHTML = engWords[index];
+		wordt[i].innerHTML = ruWords[index];
+	}
+
+	for (let i = wordsInSection; i < wordsInSection * 2; i++) {
+		index = Math.floor(Math.random() * (engWords.length - 1));
+		words[i].innerHTML = ruWords[index];
+		wordt[i].innerHTML = engWords[index];
+	}
+
+	getData();
 }
 
 function showAnswers() {
+	const wordt = document.querySelectorAll('.wordt');
+
 	if (showBtn.innerHTML === 'Show') {
 		showBtn.innerHTML = 'Hide';
 		for (let i = 0; i < wordt.length; i++) {
@@ -135,13 +152,6 @@ function removeWordFromDB() {
 	} else {
 		sendGetHttp(link);
 	}
-}
-
-function reset() {
-	insertRandomEngWords();	
-	insertRandomRuWords();  
-
-	getData();
 }
 
 function sendGetHttp(link) {
