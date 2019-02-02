@@ -18,7 +18,7 @@
  - Express js
 
 #### База данных:
- - PoestgreSQL (<https://www.elephantsql.com/>)
+ - PostgreSQL (<https://www.elephantsql.com/>)
 
 #### Клиентская часть:
  - HTML
