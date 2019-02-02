@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Words</title>
@@ -8,10 +9,15 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
 	<div class="container">
-		<button id="btn__start" class="btn btn__dark">Start!</button>
-		
+		<div class="start-container">
+			<p class="start__text">Number of words per section:</p>
+			<input id="input__start" type="number" max="9" min="1">
+			<button id="btn__start" class="btn btn__dark">Start!</button>
+		</div>
+
 		<header class="header hide">
 			<h1 class="header__title">This app is created for learning new English words easily! Just translate words below.</h1>
 		</header>
@@ -25,7 +31,7 @@
 					<!-- Тут сгенерится новая разметка -->
 				</div>
 			</section>
-			
+
 			<section class="rus-to-eng">
 				<div class="ru-words">
 					<!-- Тут сгенерится новая разметка -->
@@ -34,20 +40,39 @@
 					<!-- Тут сгенерится новая разметка -->
 				</div>
 			</section>
-			
+
 			<section class="buttons">
 				<button id="reset-btn" class="btn btn__aqua">Replace</button>
+
+				<div class="form__container">
+					<div class="form__block">
+						<span class="form__text">Enter the word (eng): </span>
+						<input id="input-eng" class="form__input" type="text">
+					</div>
+					<div class="form__block">
+						<span class="form__text">Enter the translate (rus): </span>
+						<input id="input-rus" class="form__input" type="text">
+					</div>
+					<span class="input__message input__error">Every field must contain 1 symbol or more!</span>
+					<span class="input__message input__successful">Successful!</span>
+					<section class="form__buttons">
+						<button id="form__send" class="btn btn__aqua" type="submit">Send</button>
+						<button id="form__close" class="btn btn__aqua">Close</button>
+					</section>
+				</div>
+
 				<button id="add-wrd-btn" class="btn btn__dark">Add</button>
-				<button id="rem-wrd-btn" class="btn btn__aqua">Remove</button>				
+				<button id="rem-wrd-btn" class="btn btn__aqua">Remove</button>
 				<button id="show-tr-btn" class="btn btn__dark">Show</button>
 			</section>
 		</main>
 
 		<footer class="footer">
-			<a href="https://github.com/Denvy47/node-words" class="footer__link">Source on GitHub</a>
+			<a href="https://github.com/Denvy47/node-words" class="footer__link" target="_blank">Source on GitHub</a>
 		</footer>
 	</div>
 
 	<script src="common.js"></script>
 </body>
+
 </html>

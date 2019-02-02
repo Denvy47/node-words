@@ -8,10 +8,10 @@ const connect = {
 	// user: 'iekeqaju',
 	// password: 'c3xxRc5LjmG9cWkY9lu2TdYdfZA_N7uo'
 	host: 'localhost',
-	port: 5433,
+	port: 5432,
 	database: 'postgres',
 	user: 'postgres',
-	password: '12'
+	password: 'postgres'
 };
 const db = pgp(connect);
 
