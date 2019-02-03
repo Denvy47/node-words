@@ -44,7 +44,7 @@
 			<section class="buttons">
 				<button id="reset-btn" class="btn btn__aqua">Replace</button>
 
-				<div class="form__container">
+				<div class="form__container form__container_add">
 					<div class="form__block">
 						<span class="form__text">Enter the word (eng): </span>
 						<input id="input-eng" class="form__input" type="text">
@@ -54,7 +54,7 @@
 						<input id="input-rus" class="form__input" type="text">
 					</div>
 					<span class="input__message input__error">Every field must contain 1 symbol or more!</span>
-					<span class="input__message input__successful">Successful!</span>
+					<span class="input__message input__success">Success!</span>
 					<section class="form__buttons">
 						<button id="form__send" class="btn btn__aqua" type="submit">Send</button>
 						<button id="form__close" class="btn btn__aqua">Close</button>
@@ -62,6 +62,20 @@
 				</div>
 
 				<button id="add-wrd-btn" class="btn btn__dark">Add</button>
+
+				<div class="form__container form__container_del">
+					<div class="form___block">
+						<span class="form__text">Enter the word to delete:</span>
+						<input id="form__input-del" type="text" class="form__input">
+					</div>
+					<span class="input__message input__error">Every field must contain 1 symbol or more!</span>
+					<span class="input__message input__success">Success!</span>
+					<section class="form__buttons">
+						<button id="form__btn-del" class="btn btn__aqua" type="submit">Delete</button>
+						<button id="form__btn-close" class="btn btn__aqua">Close</button>
+					</section>
+				</div>
+
 				<button id="rem-wrd-btn" class="btn btn__aqua">Remove</button>
 				<button id="show-tr-btn" class="btn btn__dark">Show</button>
 			</section>

@@ -10,16 +10,20 @@ const remBtn = document.getElementById('rem-wrd-btn');
 const startBtn = document.getElementById('btn__start');
 const sendBtn = document.querySelector('#form__send');
 const closeBtn = document.querySelector('#form__close');
-const inputWordFormBlock = document.querySelector('.form__container');
+const sendId = document.getElementById('form__btn-del');
+const closeBtn1 = document.getElementById('form__btn-close');
+const inputWordFormBlock = document.querySelectorAll('.form__container');
 const inputStart = document.getElementById('input__start');
 let wordsInSection;
 
 showBtn.addEventListener('click', showAnswers);
 resetBtn.addEventListener('click', replaceWords);
-addBtn.addEventListener('click', function() { showForm(inputWordFormBlock) });
-closeBtn.addEventListener('click', function() { showForm(inputWordFormBlock) });
+addBtn.addEventListener('click', function () { showForm(inputWordFormBlock[0]) });
+closeBtn.addEventListener('click', function () { showForm(inputWordFormBlock[0]) });
 sendBtn.addEventListener('click', addWordToDB);
-remBtn.addEventListener('click', removeWordFromDB);
+remBtn.addEventListener('click', function () { showForm(inputWordFormBlock[1]) });
+closeBtn1.addEventListener('click', function () { showForm(inputWordFormBlock[1]) });
+sendId.addEventListener('click', removeWordFromDB);
 startBtn.addEventListener('click', start);
 
 getData();
@@ -142,59 +146,79 @@ function getData() {
 function showForm(selector) {
 	if (selector.style.opacity == 1) {
 		selector.style.opacity = 0;
+		selector.style.zIndex = 0;
 	} else {
 		selector.style.opacity = 1;
+		selector.style.zIndex = 99;
 	}
 }
 
 function addWordToDB() {
-	let newEngWord;
-	let newRuWord;
+	let newEngWord = document.getElementById('input-eng').value;
+	let newRuWord = document.getElementById('input-rus').value;
 	let link;
 
-	//проверяем показывается ли форма
-	if (inputWordFormBlock.style.opacity == 1) {
-		newEngWord = document.getElementById('input-eng').value;
-		newRuWord = document.getElementById('input-rus').value;
+	//Проверяем поля на наличие символов и показываем ошибку
+	if (newEngWord === '' || newRuWord === '') {
+		let err = document.querySelectorAll('.input__error');
+		err[0].style.opacity = 1;
 
-		//Проверяем поля на наличие символов и показываем ошибку
-		if (newEngWord === '' || newRuWord === '') {
-			let err = document.querySelector('.input__error');
-			err.style.opacity = 1;
+		//удаляем ошибку через 4 сек
+		setTimeout(function () { err[0].style.opacity = 0; }, 4000);
 
-			//удаляем ошибку через 4 сек
-			setTimeout(function () { err.style.opacity = 0; }, 4000);
-			} else {
-
-			//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
-			const inputSuccess = document.querySelector('.input__successful');
-			link = '/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
-			sendGetHttp(link);
-			inputSuccess.style.opacity = 1;	
-			
-			//убираем акссесс через 4 секунды
-			setTimeout(function () { inputSuccess.style.opacity = 0; }, 4000);
-
-			//очищаем поля после отправки запроса
-			const formInput = document.querySelectorAll('.form__input');
-			for (let i = 0; i < formInput.length; i++) {
-				formInput[i].value = '';
-			}
-		}
 	} else {
-		inputWordFormBlock.style.opacity = 1;
+		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
+		const inputSuccess = document.querySelectorAll('.input__success');
+		link = '/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
+		sendGetHttp(link);
+		inputSuccess[0].style.opacity = 1;
+
+		//убираем акссесс через 4 секунды
+		setTimeout(function () { inputSuccess[0].style.opacity = 0; }, 4000);
+
+		//очищаем поля после отправки запроса
+		const formInput = document.querySelectorAll('.form__input');
+		for (let i = 0; i < formInput.length; i++) {
+			formInput[i].value = '';
+		}
 	}
+
 }
 
 function removeWordFromDB() {
-	const delWord = prompt('Введите слово для удаления (англ.): ');
-	const link = '/removeWord?engWord=' + delWord;
+	const delWord = document.getElementById('form__input-del').value;
+	let link;
+	
+	if (delWord === '') {
+		let err = document.querySelectorAll('.input__error');
+		err[1].style.opacity = 1;
 
-	if (delWord === null || delWord === '') {
-		alert('Field must contain 1 symbol or more!')
+		//удаляем ошибку через 4 сек
+		setTimeout(function () { err[1].style.opacity = 0; }, 4000);
+
 	} else {
+		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
+		const inputSuccess = document.querySelectorAll('.input__success');
+		link = '/removeWord?engWord=' + delWord;
 		sendGetHttp(link);
+		inputSuccess[1].style.opacity = 1;
+
+		//убираем акссесс через 4 секунды
+		setTimeout(function () { inputSuccess[1].style.opacity = 0; }, 4000);
+
+		//очищаем поля после отправки запроса
+		const formInput = document.querySelectorAll('.form__input');
+		for (let i = 0; i < formInput.length; i++) {
+			formInput[i].value = '';
+		}
 	}
+
+	// if () {
+	// 	alert('Field must contain 1 symbol or more!')
+	// } else {
+	// 	const link = '/removeWord?engWord=' + delWord;
+	// 	sendGetHttp(link);
+	// }
 }
 
 function sendGetHttp(link) {
