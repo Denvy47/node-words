@@ -54,7 +54,7 @@ body {
 	visibility: hidden;
 }
 
-.buttons {
+.buttons__container {
 	position: relative;
 	display: flex;
 	justify-content: space-between;

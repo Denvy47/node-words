@@ -3,30 +3,40 @@
 let engWords = [];
 let ruWords = [];
 
-const showBtn = document.getElementById('show-tr-btn');
-const resetBtn = document.getElementById('reset-btn');
-const addBtn = document.getElementById('add-wrd-btn');
-const remBtn = document.getElementById('rem-wrd-btn');
+//вешаем события на кнопки на главном экране
 const startBtn = document.getElementById('btn__start');
-const sendBtn = document.querySelector('#form__send');
-const closeBtn = document.querySelector('#form__close');
-const sendId = document.getElementById('form__btn-del');
-const closeBtn1 = document.getElementById('form__btn-close');
-const inputWordFormBlock = document.querySelectorAll('.form__container');
-const inputStart = document.getElementById('input__start');
-let wordsInSection;
-
-showBtn.addEventListener('click', showAnswers);
-resetBtn.addEventListener('click', replaceWords);
-addBtn.addEventListener('click', function () { showForm(inputWordFormBlock[0]) });
-closeBtn.addEventListener('click', function () { showForm(inputWordFormBlock[0]) });
-sendBtn.addEventListener('click', addWordToDB);
-remBtn.addEventListener('click', function () { showForm(inputWordFormBlock[1]) });
-closeBtn1.addEventListener('click', function () { showForm(inputWordFormBlock[1]) });
-sendId.addEventListener('click', removeWordFromDB);
 startBtn.addEventListener('click', start);
 
-getData();
+const resetBtn = document.getElementById('reset-btn');
+resetBtn.addEventListener('click', replaceWords);
+
+const addBtn = document.getElementById('add-wrd-btn');
+addBtn.addEventListener('click', showForm);
+
+const remBtn = document.getElementById('rem-wrd-btn');
+remBtn.addEventListener('click', showForm);
+
+const showBtn = document.getElementById('show-tr-btn');
+showBtn.addEventListener('click', showAnswers);
+
+//выбираем формы
+const addForm = document.querySelector('.form__container_add');
+const delForm = document.querySelector('.form__container_del');
+
+//вешаем события на кнопки в формах
+const addBtnOnForm = document.getElementById('form__btn-add');
+addBtnOnForm.addEventListener('click', addWordToDB);
+
+const closeBtnOnForm = document.querySelectorAll('.form__btn-close');
+for (let i = 0; i < closeBtnOnForm.length; i++) {
+	closeBtnOnForm[i].addEventListener('click', showForm);
+}
+
+const delBtnOnForm = document.getElementById('form__btn-del');
+delBtnOnForm.addEventListener('click', removeWordFromDB);
+
+const inputStart = document.getElementById('input__start');
+let wordsPerSection;
 
 inputStart.oninput = function () {
 	if (this.value.length > 1) {
@@ -34,9 +44,11 @@ inputStart.oninput = function () {
 	}
 }
 
+getData();
+
 function start() {
 	const startContainer = document.querySelector('.start-container');
-	wordsInSection = +inputStart.value;
+	wordsPerSection = +inputStart.value;
 
 	const hiddenElems = document.querySelectorAll('.hide');
 
@@ -57,7 +69,7 @@ function insertRandomEngWords() {
 	const parentWords = document.querySelector('.eng-words');
 	const parentTranslate = document.querySelector('.eng-words-translate');
 
-	for (let i = 0; i < wordsInSection; i++) {
+	for (let i = 0; i < wordsPerSection; i++) {
 		index = Math.floor(Math.random() * (engWords.length - 1));
 
 		word = document.createElement('p');
@@ -79,7 +91,7 @@ function insertRandomRuWords() {
 	const parentWords = document.querySelector('.ru-words');
 	const parentTranslate = document.querySelector('.ru-words-translate');
 
-	for (let i = 0; i < wordsInSection; i++) {
+	for (let i = 0; i < wordsPerSection; i++) {
 		index = Math.floor(Math.random() * (engWords.length - 1));
 
 		word = document.createElement('p');
@@ -99,13 +111,13 @@ function replaceWords() {
 	const words = document.querySelectorAll('.word');
 	const wordt = document.querySelectorAll('.wordt');
 
-	for (let i = 0; i < wordsInSection; i++) {
+	for (let i = 0; i < wordsPerSection; i++) {
 		index = Math.floor(Math.random() * (engWords.length - 1));
 		words[i].innerHTML = engWords[index];
 		wordt[i].innerHTML = ruWords[index];
 	}
 
-	for (let i = wordsInSection; i < Math.floor(wordsInSection * 2); i++) {
+	for (let i = wordsPerSection; i < Math.floor(wordsPerSection * 2); i++) {
 		index = Math.floor(Math.random() * (engWords.length - 1));
 		words[i].innerHTML = ruWords[index];
 		wordt[i].innerHTML = engWords[index];
@@ -131,7 +143,7 @@ function showAnswers() {
 }
 
 function getData() {
-	fetch('/getData')
+	fetch('https://node-words.herokuapp.com/getData')
 		.then(response => {
 			return response.json()
 		}).then(data => {
@@ -143,13 +155,15 @@ function getData() {
 		})
 }
 
-function showForm(selector) {
-	if (selector.style.opacity == 1) {
-		selector.style.opacity = 0;
-		selector.style.zIndex = 0;
+function showForm(event) {
+	let form = event.target.closest('.form-btn__container').firstElementChild;
+	
+	if (form.style.opacity == 1) {
+		form.style.opacity = 0;
+		form.style.zIndex = 0;
 	} else {
-		selector.style.opacity = 1;
-		selector.style.zIndex = 99;
+		form.style.opacity = 1;
+		form.style.zIndex = 99;
 	}
 }
 
@@ -169,18 +183,15 @@ function addWordToDB() {
 	} else {
 		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
 		const inputSuccess = document.querySelectorAll('.input__success');
-		link = '/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
+		link = 'https://node-words.herokuapp.com/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
 		sendGetHttp(link);
 		inputSuccess[0].style.opacity = 1;
 
-		//убираем акссесс через 4 секунды
-		setTimeout(function () { inputSuccess[0].style.opacity = 0; }, 4000);
+		//убираем акссесс через 2 секунды
+		setTimeout(function () { inputSuccess[0].style.opacity = 0; }, 2000);
 
-		//очищаем поля после отправки запроса
-		const formInput = document.querySelectorAll('.form__input');
-		for (let i = 0; i < formInput.length; i++) {
-			formInput[i].value = '';
-		}
+		//очищаем поля после отправки запроса		
+		clearInput();
 	}
 
 }
@@ -188,37 +199,27 @@ function addWordToDB() {
 function removeWordFromDB() {
 	const delWord = document.getElementById('form__input-del').value;
 	let link;
-	
+
 	if (delWord === '') {
 		let err = document.querySelectorAll('.input__error');
 		err[1].style.opacity = 1;
 
-		//удаляем ошибку через 4 сек
-		setTimeout(function () { err[1].style.opacity = 0; }, 4000);
+		//удаляем ошибку через 2 сек
+		setTimeout(function () { err[1].style.opacity = 0; }, 2000);
 
 	} else {
 		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
 		const inputSuccess = document.querySelectorAll('.input__success');
-		link = '/removeWord?engWord=' + delWord;
+		link = 'https://node-words.herokuapp.com/removeWord?engWord=' + delWord;
 		sendGetHttp(link);
 		inputSuccess[1].style.opacity = 1;
 
-		//убираем акссесс через 4 секунды
-		setTimeout(function () { inputSuccess[1].style.opacity = 0; }, 4000);
+		//убираем cакссесс через 2 секунды
+		setTimeout(function () { inputSuccess[1].style.opacity = 0; }, 2000);
 
-		//очищаем поля после отправки запроса
-		const formInput = document.querySelectorAll('.form__input');
-		for (let i = 0; i < formInput.length; i++) {
-			formInput[i].value = '';
-		}
+		//очищаем поля после отправки запроса		
+		clearInput();
 	}
-
-	// if () {
-	// 	alert('Field must contain 1 symbol or more!')
-	// } else {
-	// 	const link = '/removeWord?engWord=' + delWord;
-	// 	sendGetHttp(link);
-	// }
 }
 
 function sendGetHttp(link) {
@@ -228,4 +229,13 @@ function sendGetHttp(link) {
 				alert(response.status + ': ' + response.statusText);
 			}
 		})
+}
+
+//очищение полей в инпутах
+function clearInput() {
+	const formInput = document.querySelectorAll('.form__input');
+
+	for (let i = 0; i < formInput.length; i++) {
+		formInput[i].value = '';
+	}
 }
