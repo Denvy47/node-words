@@ -17,14 +17,14 @@ const db = pgp(connect);
 
 app.use(express.static('public'));
 
-app.get('https://node-words.herokuapp.com/getData', function (req, res) {
+app.get('/getData', function (req, res) {
 	db.any('SELECT * FROM words')
 		.then(function (result) {
 			res.json(result);
 		})
 })
 
-app.get('https://node-words.herokuapp.com/add-new-word', function (req, res) {
+app.get('/add-new-word', function (req, res) {
 	db.none('INSERT INTO words(eng_words, rus_words) VALUES(${eng}, ${rus})', {
 		eng: req.query.engWord,
 		rus: req.query.ruWord
@@ -33,7 +33,7 @@ app.get('https://node-words.herokuapp.com/add-new-word', function (req, res) {
 	res.send('Ok');
 });
 
-app.get('https://node-words.herokuapp.com/removeWord', function (req, res) {
+app.get('/removeWord', function (req, res) {
 	db.none('DELETE FROM words WHERE eng_words = ${eng}', {
 		eng: req.query.engWord
 	})
