@@ -216,6 +216,8 @@ function removeWordFromDB() {
 	}
 }
 
+
+//Вспомогательные функции
 function sendGetHttp(link) {
 	fetch(link)
 		.then(function (response) {
@@ -225,7 +227,6 @@ function sendGetHttp(link) {
 		})
 }
 
-//очищение полей в инпутах
 function clearInput() {
 	const formInput = document.querySelectorAll('.form__input');
 
