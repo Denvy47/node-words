@@ -3,107 +3,98 @@
 let engWords = [];
 let ruWords = [];
 
-//вешаем события на кнопки на главном экране
-const startBtn = document.getElementById('btn__start');
-startBtn.addEventListener('click', start);
+//Вешаем событие на кнопку "Start"
+document.getElementById('btn__start').addEventListener('click', start);
 
-const resetBtn = document.getElementById('reset-btn');
-resetBtn.addEventListener('click', replaceWords);
-
-const addBtn = document.getElementById('add-wrd-btn');
-addBtn.addEventListener('click', showForm);
-
-const remBtn = document.getElementById('rem-wrd-btn');
-remBtn.addEventListener('click', showForm);
-
-const showBtn = document.getElementById('show-tr-btn');
-showBtn.addEventListener('click', showAnswers);
-
-//выбираем формы
-const addForm = document.querySelector('.form__container_add');
-const delForm = document.querySelector('.form__container_del');
-
-//вешаем события на кнопки в формах
-const addBtnOnForm = document.getElementById('form__btn-add');
-addBtnOnForm.addEventListener('click', addWordToDB);
-
-const closeBtnOnForm = document.querySelectorAll('.form__btn-close');
-for (let i = 0; i < closeBtnOnForm.length; i++) {
-	closeBtnOnForm[i].addEventListener('click', showForm);
-}
-
-const delBtnOnForm = document.getElementById('form__btn-del');
-delBtnOnForm.addEventListener('click', removeWordFromDB);
-
-const inputStart = document.getElementById('input__start');
+//Переменная для хранения количества слов в каждой секции
 let wordsPerSection;
 
+window.onload = getData();
+
+//Обрезаем число слов в каждой секции до 1 символа в секции "Старт"
+const inputStart = document.getElementById('input__start');
 inputStart.oninput = function () {
 	if (this.value.length > 1) {
 		this.value = this.value.slice(0, 1);
 	}
 }
 
-getData();
+function start() {	
 
-function start() {
-	const startContainer = document.querySelector('.start-container');
+	//Вешаем события на кнопки на главном экране	
+	document.getElementById('reset-btn').addEventListener('click', replaceWords);
+	document.getElementById('add-wrd-btn').addEventListener('click', showForm);
+	document.getElementById('rem-wrd-btn').addEventListener('click', showForm);
+	document.getElementById('show-tr-btn').addEventListener('click', showAnswers);
+
+	//Вешаем события на кнопки в формах
+	document.getElementById('form__btn-add').addEventListener('click', addWordToDB);
+	document.getElementById('form__btn-del').addEventListener('click', removeWordFromDB);
+	const closeBtnOnForm = document.querySelectorAll('.form__btn-close');
+	for (let i = 0; i < closeBtnOnForm.length; i++) {
+		closeBtnOnForm[i].addEventListener('click', showForm);
+	}
+
+	//Присваиваем глобальной переменной значение числа слов в каждой секции
 	wordsPerSection = +inputStart.value;
 
+	//Показываем спрятанные элементы
 	const hiddenElems = document.querySelectorAll('.hide');
-
 	for (let i = 0; i < hiddenElems.length; i++) {
 		hiddenElems[i].classList.remove('hide');
 	}
 
-	startContainer.classList.add('hide');
+	//Прячем секцию "Старт"
+	document.querySelector('.start-container').classList.add('hide');
 
-	insertRandomEngWords();
-	insertRandomRuWords();
+	createWords(engWords, ruWords);
 }
 
-function insertRandomEngWords() {
+function createWords(arrayWords, translateArrayWords) {
 	let index;
 	let word;
 	let translate;
-	const parentWords = document.querySelector('.eng-words');
-	const parentTranslate = document.querySelector('.eng-words-translate');
+	const parentEngWords = document.querySelector('.eng-words');
+	const parentEngTranslate = document.querySelector('.eng-words-translate');
+	const parentRuWords = document.querySelector('.ru-words');
+	const parentRusTranslate = document.querySelector('.ru-words-translate');
+	
+	//Проверка на повторяющиеся индексы
+	let checkIndex = [];
+	function containIndex(number) {	return number === index; }
 
+	//Создаем HTML и вставляем значения из массивов-параметров
 	for (let i = 0; i < wordsPerSection; i++) {
-		index = Math.floor(Math.random() * (engWords.length - 1));
+		index = Math.floor(Math.random() * (arrayWords.length - 1));
 
-		word = document.createElement('p');
-		word.classList.add('word');
-		word.innerHTML = ruWords[index];
-		parentWords.appendChild(word);
+		if(checkIndex.some(containIndex)) {
+			index = Math.floor(Math.random() * (arrayWords.length - 1));
+			i--;
+		} else {
+			word = document.createElement('p');
+			word.classList.add('word');
+			word.innerHTML = arrayWords[index];
+			parentEngWords.appendChild(word);
 
-		translate = document.createElement('p');
-		translate.classList.add('wordt');
-		translate.innerHTML = engWords[index]
-		parentTranslate.appendChild(translate);
-	};
-}
+			translate = document.createElement('p');
+			translate.classList.add('wordt');
+			translate.innerHTML = translateArrayWords[index];
+			parentEngTranslate.appendChild(translate);
 
-function insertRandomRuWords() {
-	let index;
-	let word;
-	let translate;
-	const parentWords = document.querySelector('.ru-words');
-	const parentTranslate = document.querySelector('.ru-words-translate');
+			word = document.createElement('p');
+			word.classList.add('word');
+			word.innerHTML = translateArrayWords[index];
+			parentRuWords.appendChild(word);
 
-	for (let i = 0; i < wordsPerSection; i++) {
-		index = Math.floor(Math.random() * (engWords.length - 1));
+			translate = document.createElement('p');
+			translate.classList.add('wordt');
+			translate.innerHTML = arrayWords[index]
+			parentRusTranslate.appendChild(translate);
 
-		word = document.createElement('p');
-		word.classList.add('word');
-		word.innerHTML = engWords[index];
-		parentWords.appendChild(word);
-
-		translate = document.createElement('p');
-		translate.classList.add('wordt');
-		translate.innerHTML = ruWords[index]
-		parentTranslate.appendChild(translate);
-	};
+			//Добавляем новое значение индекса в массив уже созданных индексов
+			checkIndex.push(index);
+		}		
+	}
 }
 
 function replaceWords() {
@@ -128,6 +119,7 @@ function replaceWords() {
 
 function showAnswers() {
 	const wordt = document.querySelectorAll('.wordt');
+	const showBtn = document.getElementById('show-tr-btn');
 
 	if (showBtn.innerHTML === 'Show') {
 		showBtn.innerHTML = 'Hide';
@@ -143,7 +135,8 @@ function showAnswers() {
 }
 
 function getData() {
-	fetch('https://node-words.herokuapp.com/getData')
+	//fetch('https://node-words.herokuapp.com/getData')
+	fetch('http://localhost:8080/getData')
 		.then(response => {
 			return response.json()
 		}).then(data => {
@@ -157,7 +150,7 @@ function getData() {
 
 function showForm(event) {
 	let form = event.target.closest('.form-btn__container').firstElementChild;
-	
+
 	if (form.style.opacity == 1) {
 		form.style.opacity = 0;
 		form.style.zIndex = 0;
@@ -183,7 +176,8 @@ function addWordToDB() {
 	} else {
 		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
 		const inputSuccess = document.querySelectorAll('.input__success');
-		link = 'https://node-words.herokuapp.com/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
+		//link = 'https://node-words.herokuapp.com/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
+		link = 'http://localhost:8080/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
 		sendGetHttp(link);
 		inputSuccess[0].style.opacity = 1;
 
@@ -193,7 +187,6 @@ function addWordToDB() {
 		//очищаем поля после отправки запроса		
 		clearInput();
 	}
-
 }
 
 function removeWordFromDB() {
@@ -210,7 +203,8 @@ function removeWordFromDB() {
 	} else {
 		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
 		const inputSuccess = document.querySelectorAll('.input__success');
-		link = 'https://node-words.herokuapp.com/removeWord?engWord=' + delWord;
+		//link = 'https://node-words.herokuapp.com/removeWord?engWord=' + delWord;
+		link = 'http://localhost:8080/removeWord?engWord=' + delWord;
 		sendGetHttp(link);
 		inputSuccess[1].style.opacity = 1;
 
@@ -239,3 +233,4 @@ function clearInput() {
 		formInput[i].value = '';
 	}
 }
+

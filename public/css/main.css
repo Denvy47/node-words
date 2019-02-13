@@ -51,6 +51,7 @@ body {
 }
 
 .wordt {
+	text-transform: capitalize;
 	visibility: hidden;
 }
 
