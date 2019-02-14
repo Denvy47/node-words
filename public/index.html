@@ -13,8 +13,27 @@
 <body>
 	<div class="container">
 		<div class="start-container">
-			<p class="start__text">Enter a number of words, that will be show:</p>
-			<input id="input__start" type="number" value="4" max="9" min="1">
+			<div class="numberWords-conitainer">
+				<span class="start__text">Enter a number of words, that will be show:</span>
+				<input id="input__start" class="input__start" type="number" value="4" max="9" min="1">
+			</div>
+
+			<div class="connectToDb-container hide">
+				<div class="dbText-container">
+					<p class="start__text">Host:</p>
+					<p class="start__text">Port:</p>
+					<p class="start__text">DB:</p>
+					<p class="start__text">User:</p>
+					<p class="start__text">Pass:</p>
+				</div>
+				<div class="dbInput-container">
+					<input type="text" id="bd-url" class="input__start">
+					<input type="text" id="bd-port" class="input__start">
+					<input type="text" id="bd-db" class="input__start">
+					<input type="text" id="bd-user" class="input__start">
+					<input type="text" id="bd-pass" class="input__start">
+				</div>
+			</div>
 			<button id="btn__start" class="btn btn__dark">Start!</button>
 		</div>
 

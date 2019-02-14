@@ -4,14 +4,14 @@ body {
 }
 
 .container {
-	padding-top: 1px;
+	padding-top: 10px;
 	max-width: 576px;
 	margin: 0 auto;
 	background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
 }
 
 .hide {
-	display: none;
+	display: none !important; 
 }
 
 .header {
@@ -145,15 +145,28 @@ body {
 	outline: none;
 }
 
-.start__text {
+.connectToDb-container {
+	text-align: center;
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.connectToDb-container .input__start {
+	width: 200px;
+	display: block;
+	margin-bottom: 3px;
+}
+
+.numberWords-conitainer {
 	text-align: center;
 	color: #051937;
 }
 
-#input__start {
-	margin: 0 auto;
+.input__start {
+	margin-left: 4px;
 	padding: 2px 4px;
-	display: block;
+	display: inline-block;
 	width: 28px;
 	background-color: #00c9b7;
 	color: #051937;

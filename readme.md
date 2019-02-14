@@ -19,7 +19,7 @@
 #### Клиентская часть:
  - HTML
  - CSS
- - vanilla JS
+ - JS
 
 #### Серверная часть:
  - Node js
@@ -29,7 +29,7 @@
  - PostgreSQL (<https://www.elephantsql.com/>)
 
 #### Хостинг:
- - Heroku
+ - Heroku <https://node-words.herokuapp.com/>
 
  ## Чтобы развернуть приложение локально (например, через git clone):
  - Установить node js
