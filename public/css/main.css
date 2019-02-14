@@ -63,7 +63,7 @@ body {
 
 .form__container {
 	position: absolute;
-	background-color: #051937;
+	background-color: rgba(5, 25, 55, .9);
 	border-radius: 5px;
 	font-size: 12px;
 	padding: 12px 12px 8px;

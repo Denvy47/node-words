@@ -2,14 +2,12 @@
 
 let engWords = [];
 let ruWords = [];
-
-//Вешаем событие на кнопку "Start"
-document.getElementById('btn__start').addEventListener('click', start);
-
-//Переменная для хранения количества слов в каждой секции
 let wordsPerSection;
 
 window.onload = getData();
+
+//Вешаем событие на кнопку "Start"
+document.getElementById('btn__start').addEventListener('click', start);
 
 //Обрезаем число слов в каждой секции до 1 символа в секции "Старт"
 const inputStart = document.getElementById('input__start');
@@ -22,7 +20,7 @@ inputStart.oninput = function () {
 function start() {	
 
 	//Вешаем события на кнопки на главном экране	
-	document.getElementById('reset-btn').addEventListener('click', replaceWords);
+	document.getElementById('reset-btn').addEventListener('click', function() { replaceWords(engWords, ruWords) });
 	document.getElementById('add-wrd-btn').addEventListener('click', showForm);
 	document.getElementById('rem-wrd-btn').addEventListener('click', showForm);
 	document.getElementById('show-tr-btn').addEventListener('click', showAnswers);
@@ -59,11 +57,11 @@ function createWords(arrayWords, translateArrayWords) {
 	const parentRuWords = document.querySelector('.ru-words');
 	const parentRusTranslate = document.querySelector('.ru-words-translate');
 	
-	//Проверка на повторяющиеся индексы
+	//Для проверки на повторяющиеся индексы в циклах
 	let checkIndex = [];
 	function containIndex(number) {	return number === index; }
 
-	//Создаем HTML и вставляем значения из массивов-параметров
+	//Создаем html элементы в первой секции
 	for (let i = 0; i < wordsPerSection; i++) {
 		index = Math.floor(Math.random() * (arrayWords.length - 1));
 
@@ -81,6 +79,19 @@ function createWords(arrayWords, translateArrayWords) {
 			translate.innerHTML = translateArrayWords[index];
 			parentEngTranslate.appendChild(translate);
 
+			checkIndex.push(index);
+		}
+	}
+
+	//Создаем html элементы во второй секции
+	for (let i = 0; i < wordsPerSection; i++) {
+		index = Math.floor(Math.random() * (arrayWords.length - 1));
+
+		if(checkIndex.some(containIndex)) {
+			index = Math.floor(Math.random() * (arrayWords.length - 1));
+			i--;
+		} else {
+
 			word = document.createElement('p');
 			word.classList.add('word');
 			word.innerHTML = translateArrayWords[index];
@@ -91,27 +102,48 @@ function createWords(arrayWords, translateArrayWords) {
 			translate.innerHTML = arrayWords[index]
 			parentRusTranslate.appendChild(translate);
 
-			//Добавляем новое значение индекса в массив уже созданных индексов
 			checkIndex.push(index);
-		}		
+		}
 	}
 }
 
-function replaceWords() {
+function replaceWords(arrayWords, translateArrayWords) {
 	let index;
 	const words = document.querySelectorAll('.word');
 	const wordt = document.querySelectorAll('.wordt');
 
+	//Для проверки на повторяющиеся индексы в циклах
+	let checkIndex = [];
+	function containIndex(number) {	return number === index; }
+
+	//Заменяем содержимое html элементов в первой секции
 	for (let i = 0; i < wordsPerSection; i++) {
-		index = Math.floor(Math.random() * (engWords.length - 1));
-		words[i].innerHTML = engWords[index];
-		wordt[i].innerHTML = ruWords[index];
+		index = Math.floor(Math.random() * (arrayWords.length - 1));
+
+		if(checkIndex.some(containIndex)) {
+			index = Math.floor(Math.random() * (arrayWords.length - 1));
+			i--;
+		} else {
+			words[i].innerHTML = arrayWords[index];
+			wordt[i].innerHTML = translateArrayWords[index];
+
+			checkIndex.push(index);
+		}
 	}
 
+	//Заменяем содержимое html элементов в первой секции
 	for (let i = wordsPerSection; i < Math.floor(wordsPerSection * 2); i++) {
-		index = Math.floor(Math.random() * (engWords.length - 1));
-		words[i].innerHTML = ruWords[index];
-		wordt[i].innerHTML = engWords[index];
+		index = Math.floor(Math.random() * (arrayWords.length - 1));
+
+		if(checkIndex.some(containIndex)) {
+			index = Math.floor(Math.random() * (arrayWords.length - 1));
+			i--;
+		} else {
+			words[i].innerHTML = translateArrayWords[index];
+			wordt[i].innerHTML = arrayWords[index];
+
+			checkIndex.push(index);
+		}
 	}
 
 	getData();
@@ -140,7 +172,10 @@ function getData() {
 		.then(response => {
 			return response.json()
 		}).then(data => {
-			for (let i = 0; i < data.length; i++) {
+			engWords.length = 0;
+			ruWords.length = 0;
+
+			for (let i = 0; i < data.length; i++) {		
 				engWords.push(data[i].eng_words);
 				ruWords.push(data[i].rus_words);
 			}
@@ -216,7 +251,6 @@ function removeWordFromDB() {
 	}
 }
 
-
 //Вспомогательные функции
 function sendGetHttp(link) {
 	fetch(link)
@@ -234,4 +268,3 @@ function clearInput() {
 		formInput[i].value = '';
 	}
 }
-
