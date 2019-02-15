@@ -173,8 +173,8 @@ function showAnswers() {
 }
 
 function getData() {
-	//fetch('https://node-words.herokuapp.com/getData')
-	fetch('http://localhost:8080/getData')
+	fetch('https://node-words.herokuapp.com/getData')
+	//fetch('http://localhost:8080/getData')
 		.then(response => {
 			return response.json()
 		}).then(data => {
@@ -217,8 +217,8 @@ function addWordToDB() {
 	} else {
 		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
 		const inputSuccess = document.querySelectorAll('.input__success');
-		//link = 'https://node-words.herokuapp.com/add-new-word?ruWord=' + newRuWord + '&engWord=' + newEngWord;
-		link = `http://localhost:8080/add-new-word?ruWord=${newRuWord}&engWord=${newEngWord}`;
+		link = `https://node-words.herokuapp.com/add-new-word?ruWord=${newRuWord}&engWord=${newEngWord}`;
+		//link = `http://localhost:8080/add-new-word?ruWord=${newRuWord}&engWord=${newEngWord}`;
 		sendGetHttp(link);
 		inputSuccess[0].style.opacity = 1;
 
@@ -244,8 +244,8 @@ function removeWordFromDB() {
 	} else {
 		//если поля не пустые, то формируем ссылку, отправляем запрос, показываем саккссес
 		const inputSuccess = document.querySelectorAll('.input__success');
-		//link = 'https://node-words.herokuapp.com/removeWord?engWord=' + delWord;
-		link = `http://localhost:8080/removeWord?engWord=${delWord}`;
+		link = `https://node-words.herokuapp.com/removeWord?engWord=${delWord}`;
+		//link = `http://localhost:8080/removeWord?engWord=${delWord}`;
 		sendGetHttp(link);
 		inputSuccess[1].style.opacity = 1;
 

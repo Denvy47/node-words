@@ -145,19 +145,6 @@ body {
 	outline: none;
 }
 
-.connectToDb-container {
-	text-align: center;
-	margin-top: 10px;
-	display: flex;
-	justify-content: center;
-}
-
-.connectToDb-container .input__start {
-	width: 200px;
-	display: block;
-	margin-bottom: 3px;
-}
-
 .numberWords-conitainer {
 	text-align: center;
 	color: #051937;
