@@ -53,6 +53,7 @@ body {
 .wordt {
 	text-transform: capitalize;
 	visibility: hidden;
+	margin-bottom: 5px;
 }
 
 .buttons__container {
