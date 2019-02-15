@@ -15,7 +15,7 @@ const localhost = {
 	user: 'postgres',
 	password: '12'
 };
-let db = pgp(localhost);
+let db = pgp(heroku);
 
 
 
