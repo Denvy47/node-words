@@ -14,7 +14,7 @@
  - _"Remove"_ - удаляет слово с переводом из БД
  - _"Replace"_ - генерирует новые слова
  
-## Что было использовано при создании:
+## Что было использовано:
 
 #### Клиентская часть:
  - HTML
@@ -29,11 +29,4 @@
  - PostgreSQL (<https://www.elephantsql.com/>)
 
 #### Хостинг:
- - Heroku <https://node-words.herokuapp.com/>
-
- ## Чтобы развернуть приложение локально (например, через git clone):
- - Установить node js
- - Открыть cmd
- - npm install
- - npm start
- - сервер на localhost:8080
+ - Heroku <https://node-words.herokuapp.com/> 
